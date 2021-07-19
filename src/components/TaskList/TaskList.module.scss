@@ -1,0 +1,46 @@
+@import "src/assets/main";
+
+.TaskList{
+    padding: 16px;
+    border: 5px solid $softGrayColor;
+    border-radius: 24px;
+
+    user-select: none;
+
+    .TaskList__header{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        margin-bottom: 12px;
+
+        .title{
+            font-size: 28px;
+            font-weight: bold;
+            color: $blackColor;
+        }
+        .actions{
+            display: flex;
+            align-items: center;
+            grid-gap: 8px;
+
+            & > *{
+                min-width: 17px;
+                cursor: pointer;
+            }
+
+            .id{
+                color: $grayColor;
+                font-size: 22px;
+                font-weight: 600;
+                cursor: default;
+            }
+        }
+    }
+
+    .TaskList__content{
+        display: flex;
+        flex-direction: column;
+        grid-gap: 8px;
+    }
+}

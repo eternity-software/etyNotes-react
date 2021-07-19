@@ -1,0 +1,23 @@
+// COLORS
+$etyMainColor: #4A98FF;
+$softGrayColor: #FAFAFA;
+$blackColor: #363636;
+$grayColor: #CECECE;
+
+// NORMALIZE
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Montserrat";
+    border: 0;
+}
+
+input{
+    outline: 0;
+}
+
+a{
+    color: $etyMainColor;
+    text-decoration: none;
+}

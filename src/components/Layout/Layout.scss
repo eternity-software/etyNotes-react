@@ -1,0 +1,22 @@
+@keyframes show {
+    from{
+        transform: scale(0.8);
+        opacity: 0;
+    }
+    to{
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.Layout{
+    min-height: 100vh;
+    width: 100%;
+    animation: show 0.3s;
+
+    .container{
+        max-width: 1152px;
+        margin: 0 auto;
+        padding: 0 16px;
+    }
+}

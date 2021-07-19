@@ -1,0 +1,13 @@
+.Dashboard{
+
+
+    .content{
+        min-height: 100vh;
+        padding: 90px 60px 26px 458px;
+
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-auto-rows: 400px;
+        grid-gap: 16px;
+    }
+}

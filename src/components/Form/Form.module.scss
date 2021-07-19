@@ -1,0 +1,53 @@
+@import "../../assets/main";
+
+.Form{
+    padding: 18px 20px;
+    background-color: #fff;
+    border-radius: 20px;
+
+    .title{
+        text-align: center;
+        color: $blackColor;
+        font-size: 36px;
+        font-weight: 600;
+        margin-bottom: 28px;
+    }
+    .content{
+        display: flex;
+        flex-direction: column;
+        grid-gap: 14px;
+    }
+    .actions{
+        padding-top: 14px;
+        display: flex;
+        align-items: center;
+        position: relative;
+
+        .submit{
+            min-height: 60px;
+            min-width: 60px;
+            border-radius: 100%;
+            border: 2px solid $softGrayColor;
+            background-color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s, border-color 0.3s;
+
+            position: absolute;
+            right: 0;
+            bottom: -39px;
+
+            cursor: pointer;
+
+            &:hover{
+                background-color: $softGrayColor;
+            }
+            &:active{
+                background-color: $grayColor;
+                border-color: $grayColor;
+            }
+        }
+    }
+
+}

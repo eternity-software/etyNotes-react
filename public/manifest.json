@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "etyNotes",
+  "name": "Simple corp app for create notes",
   "icons": [
     {
       "src": "favicon.ico",

@@ -1,0 +1,30 @@
+@import "src/assets/main";
+
+.Input{
+    & > input{
+        padding: 8px 20px;
+        text-align: center;
+        border: 2px solid #F2F2F2;
+        border-radius: 14px;
+        transition: border-color 0.3s;
+
+        font-weight: 500;
+        font-size: 18px;
+        color: $blackColor;
+
+        &:focus{
+            border-color: $etyMainColor;
+        }
+        &::placeholder{
+            color: $grayColor;
+        }
+    }
+
+    &.success > input{
+        border-color: #AFFFEC;
+    }
+
+    &.error > input{
+        border-color: #FFAFAF;
+    }
+}

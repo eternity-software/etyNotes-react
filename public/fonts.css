@@ -1,0 +1,75 @@
+/* MONTSERRAT FONT */
+@font-face {
+    font-family: "Montserrat";
+    font-weight: 400;
+    font-style: normal;
+    src: url("/fonts/Montserrat/Montserrat-Regular.ttf");
+}
+@font-face {
+    font-family: "Montserrat";
+    font-weight: 400;
+    font-style: italic;
+    src: url("/fonts/Montserrat/Montserrat-Italic.ttf");
+}
+@font-face {
+    font-family: "Montserrat";
+    font-weight: 200;
+    font-style: normal;
+    src: url("/fonts/Montserrat/Montserrat-Light.ttf");
+}
+@font-face {
+    font-family: "Montserrat";
+    font-weight: 500;
+    font-style: normal;
+    src: url("/fonts/Montserrat/Montserrat-Medium.ttf");
+}
+@font-face {
+    font-family: "Montserrat";
+    font-weight: 600;
+    font-style: normal;
+    src: url("/fonts/Montserrat/Montserrat-Bold.ttf");
+}
+@font-face {
+    font-family: "Montserrat";
+    font-weight: bold;
+    font-style: normal;
+    src: url("/fonts/Montserrat/Montserrat-Black.ttf");
+}
+
+/* Material Icons FONT */
+@font-face {
+    font-family: 'Material Icons';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Material Icons'),
+    local('MaterialIcons-Regular'),
+    url(/fonts/Material-Icons/MaterialIcons-Regular.ttf) format('truetype');
+}
+.material-icons {
+    font-family: 'Material Icons', sans-serif;
+    font-weight: normal;
+    font-style: normal;
+    font-size: 24px;  /* Preferred icon size */
+    display: inline-block;
+    line-height: 1;
+    text-transform: none;
+    letter-spacing: normal;
+    word-wrap: normal;
+    white-space: nowrap;
+    direction: ltr;
+
+    /* Support for all WebKit browsers. */
+    -webkit-font-smoothing: antialiased;
+    /* Support for Safari and Chrome. */
+    text-rendering: optimizeLegibility;
+
+    /* Support for Firefox. */
+    -moz-osx-font-smoothing: grayscale;
+
+    /* Support for IE. */
+    font-feature-settings: 'liga';
+
+    user-select: none;
+}
+
+

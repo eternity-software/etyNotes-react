@@ -1,0 +1,21 @@
+.Header{
+    position: fixed;
+    top: 100px;
+    left: 0;
+    right: 0;
+    width: 100%;
+
+    .container{
+        display: flex;
+        align-items: center;
+        height: 64px;
+    }
+}
+
+@media screen and (max-width: 420px){
+    .Header{
+        .container{
+            justify-content: center;
+        }
+    }
+}
