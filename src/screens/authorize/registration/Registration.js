@@ -28,7 +28,7 @@ export class Registration extends Component{
 					name: "email",
 					type: "email",
 					placeholder: "Email",
-					regex: /(.*)@(.*)\.(\w+)/gm,
+					regex: /[(\d+)(\w+).]*@(\w+)\.(\w+)/gm,
 					minLength: 4,
 					maxLength: 255,
 					value: "",
@@ -50,11 +50,16 @@ export class Registration extends Component{
 		document.title = "Регистрация";
 	}
 
-	onSubmit = fields => {
+	onSubmit = async(fields) => {
 		try {
-			this.props.history.push("/activate");
 			// Загружаем данные асинхронно из несуществующего места.
-			let result = API.get("/account.create", fields);
+			let result = await API.get(`/account/create?name=${fields.name}&email=${fields.email}&password=${fields.password}`);
+			if(result.data.type === "success"){
+				localStorage.setItem("token", result.data.data.token);
+				this.props.history.push("/activate");
+			} else {
+				alert(result.data.data[0].message);
+			}
 		} catch (e) {
 			console.log(`😱 Axios request failed: ${e}`);
 		}

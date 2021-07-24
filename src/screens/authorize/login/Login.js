@@ -39,13 +39,22 @@ export class Login extends Component{
 
 	componentDidMount() {
 		document.title = "Авторизация";
+
+		if(localStorage.getItem("token")){
+			this.props.history.push("/dashboard");
+		}
 	}
 
-	onSubmit = fields => {
+	onSubmit = async (fields) => {
 		try {
-			this.props.history.push("/dashboard");
 			// Загружаем данные асинхронно из несуществующего места.
-			let result = API.get("/account.login", fields);
+			let result = await API.get(`/account/login?email=${fields.email}&password=${fields.password}`);
+			if(result.data.type === "success"){
+				localStorage.setItem("token", result.data.data.token);
+				this.props.history.push("/dashboard");
+			} else {
+				alert(result.data.data[0].message);
+			}
 		} catch (e) {
 			console.log(`😱 Axios request failed: ${e}`);
 		}

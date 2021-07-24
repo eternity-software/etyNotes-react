@@ -33,11 +33,16 @@ export class Activate extends Component{
 		document.title = "Активация аккаунта";
 	}
 
-	onSubmit = fields => {
+	onSubmit = async (fields) => {
 		try {
-			this.props.history.push("/dashboard");
+			const token = localStorage.getItem("token");
 			// Загружаем данные асинхронно из несуществующего места.
-			let result = API.get("/account.verify", fields);
+			let result = await API.get(`/account/activate?token=${token}&code=${fields.code}`);
+			if(result.data.type === "success"){
+				this.props.history.push("/dashboard");
+			} else {
+				alert(result.data.data[0].message);
+			}
 		} catch (e) {
 			console.log(`😱 Axios request failed: ${e}`);
 		}
