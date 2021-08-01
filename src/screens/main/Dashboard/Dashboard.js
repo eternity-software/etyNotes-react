@@ -6,10 +6,14 @@ import Sidebar from "../components/Sidebar/Sidebar";
 import API from "../../../services/API";
 
 export class Dashboard extends Component{
+
+
+
 	constructor(props) {
 		super(props);
 
 		this.state = {
+			token: "",
 			newDeskInput: "",
 			newDeskDesc: "",
 			account: {},
@@ -73,7 +77,20 @@ export class Dashboard extends Component{
 	}
 
 	updateDesks = (token) => {
+		console.log(token);
 		API.get(`/desk/getList?token=${token}`).then((result) => {
+			if(result.data.type === "success"){
+				this.setState({deskLists: result.data.data.desks, token: token});
+			} else {
+				alert(result.data.data[0].message);
+			}
+		});
+	}
+
+
+
+	updateDeskTasks = (token) => {
+		API.get(`/desk/get?token=${token}`).then((result) => {
 			if(result.data.type === "success"){
 				this.setState({deskLists: result.data.data.desks});
 			} else {
@@ -81,6 +98,18 @@ export class Dashboard extends Component{
 			}
 		});
 	}
+
+	removeDesk = (id) => {
+		let token = this.state.token;
+		API.get(`/desk/remove?token=${token}&id=${id}`).then((result) => {
+			if(result.data.type === "success"){
+				this.updateDesks(token);
+			} else {
+				console.log(result);
+			}
+		});
+	}
+
 
 	closeNewDesk = () => {
 		window.location.href = "#close";
@@ -111,11 +140,11 @@ export class Dashboard extends Component{
 		}
 	};
 
-	changeNewDeskInput = (valid, e) => {
+	changeNewDeskInput = (valid, shit, e) => {
 		this.setState({newDeskInput: e.target.value});
 	};
 
-	changeNewDeskDescription = (valid, e) => {
+	changeNewDeskDescription = (valid, shit,  e) => {
 		this.setState({newDeskDesc: e.target.value});
 	};
 
@@ -126,6 +155,9 @@ export class Dashboard extends Component{
 
 				<div className={classes.Dashboard}>
 					<Sidebar
+						removeDesk={this.removeDesk}
+
+						token={this.state.token}
 
 						deskLists={this.state.deskLists}
 					/>

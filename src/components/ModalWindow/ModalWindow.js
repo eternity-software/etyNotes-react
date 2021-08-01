@@ -1,7 +1,5 @@
 import "./ModalWindow.scss"
 import {Image, Input} from "../index";
-import {Button} from "semantic-ui-react";
-import classes from "../Form/Form.module.scss";
 export const ModalWindow = props => {
     const cls = ["ModalWindow"];
     if(props.className) cls.push(props.className);

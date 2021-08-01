@@ -7,6 +7,8 @@ const Sidebar = props => {
 		window.location.href = "#win1";
 	}
 
+
+
 	return (
 		<div className={classes.Sidebar}>
 			<div className={classes.content}>
@@ -45,7 +47,7 @@ const Sidebar = props => {
 										<p className={classes.subtitle}>12 заданий, 10 ваши</p>
 									</div>
 									<div className={classes.actions}>
-										<Image src="/img/delete-icon.svg" />
+										<Image onClick={props.removeDesk.bind(this, el.deskId)} src="/img/delete-icon.svg" />
 										<Image src="/img/arrow-right.svg" style={{maxWidth: 25}} />
 									</div>
 								</li>
