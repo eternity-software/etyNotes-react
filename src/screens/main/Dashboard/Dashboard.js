@@ -4,6 +4,7 @@ import {Layout, TaskList} from "../../../components";
 import {ModalWindow} from "../../../components/ModalWindow/ModalWindow";
 import Sidebar from "../components/Sidebar/Sidebar";
 import API from "../../../services/API";
+import Axios from "../../../services/Axios";
 
 export class Dashboard extends Component{
 
@@ -58,7 +59,7 @@ export class Dashboard extends Component{
 		try {
 			const token = localStorage.getItem("token");
 
-			API.get(`/account/getInfo?token=${token}`).then((result) => {
+			Axios.get(`/account/getInfo?token=${token}`).then((result) => {
 				if(result.data.type === "success"){
 					if(result.data.data.account.activated === "Y"){
 						this.setState({account: result.data.data.account});
@@ -78,7 +79,7 @@ export class Dashboard extends Component{
 
 	updateDesks = (token) => {
 		console.log(token);
-		API.get(`/desk/getList?token=${token}`).then((result) => {
+		Axios.get(`/desk/getList?token=${token}`).then((result) => {
 			if(result.data.type === "success"){
 				this.setState({deskLists: result.data.data.desks, token: token});
 			} else {
@@ -90,7 +91,7 @@ export class Dashboard extends Component{
 
 
 	updateDeskTasks = (token) => {
-		API.get(`/desk/get?token=${token}`).then((result) => {
+		Axios.get(`/desk/get?token=${token}`).then((result) => {
 			if(result.data.type === "success"){
 				this.setState({deskLists: result.data.data.desks});
 			} else {
@@ -122,7 +123,9 @@ export class Dashboard extends Component{
 				const name = this.state.newDeskInput;
 				const description = this.state.newDeskDesc;
 
-				API.get(`/desk/create?token=${token}&name=${name}&description=${description}`).then((result) => {
+				console.log(token);
+
+				Axios.get(`/desk/create?token=${token}&name=${name}&description=${description}`).then((result) => {
 					if (result.data.type === "success") {
 						this.updateDesks(token);
 						window.location.href = "#close";
@@ -131,6 +134,7 @@ export class Dashboard extends Component{
 					}
 				});
 			} catch (e) {
+				alert(e)
 				console.log(`😱 Axios request failed: ${e}`);
 			}
 		}
