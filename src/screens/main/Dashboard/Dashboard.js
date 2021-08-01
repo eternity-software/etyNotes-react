@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import classes from "./Dashboard.module.scss";
 import {Layout, TaskList} from "../../../components";
+import {ModalWindow} from "../../../components/ModalWindow/ModalWindow";
 import Sidebar from "../components/Sidebar/Sidebar";
 import API from "../../../services/API";
 
@@ -9,6 +10,8 @@ export class Dashboard extends Component{
 		super(props);
 
 		this.state = {
+			newDeskInput: "",
+			newDeskDesc: "",
 			account: {},
 			deskLists: [],
 			taskLists: [
@@ -41,6 +44,10 @@ export class Dashboard extends Component{
 		};
 	}
 
+
+
+
+
 	componentDidMount() {
 		document.title = "Панель управления";
 
@@ -51,14 +58,8 @@ export class Dashboard extends Component{
 				if(result.data.type === "success"){
 					if(result.data.data.account.activated === "Y"){
 						this.setState({account: result.data.data.account});
+						this.updateDesks(token);
 
-						API.get(`/desk/getList?token=${token}`).then((result) => {
-							if(result.data.type === "success"){
-								this.setState({deskLists: result.data.data.desks});
-							} else {
-								alert(result.data.data[0].message);
-							}
-						});
 					} else {
 						this.props.history.push("/activate");
 					}
@@ -71,14 +72,66 @@ export class Dashboard extends Component{
 		}
 	}
 
+	updateDesks = (token) => {
+		API.get(`/desk/getList?token=${token}`).then((result) => {
+			if(result.data.type === "success"){
+				this.setState({deskLists: result.data.data.desks});
+			} else {
+				alert(result.data.data[0].message);
+			}
+		});
+	}
+
+	closeNewDesk = () => {
+		window.location.href = "#close";
+	};
+
+	createNewDesk = () => {
+		if(this.state.newDeskInput.length > 4 && this.state.newDeskDesc.length > 4) {
+			try {
+				const token = localStorage.getItem("token");
+				const name = this.state.newDeskInput;
+				const description = this.state.newDeskDesc;
+
+				API.get(`/desk/create?token=${token}&name=${name}&description=${description}`).then((result) => {
+					if (result.data.type === "success") {
+						this.updateDesks(token);
+						window.location.href = "#close";
+					} else {
+						alert(result.data.data[0].message);
+					}
+				});
+			} catch (e) {
+				console.log(`😱 Axios request failed: ${e}`);
+			}
+		}
+		else
+		{
+			alert("Некорректные данные.")
+		}
+	};
+
+	changeNewDeskInput = (valid, e) => {
+		this.setState({newDeskInput: e.target.value});
+	};
+
+	changeNewDeskDescription = (valid, e) => {
+		this.setState({newDeskDesc: e.target.value});
+	};
+
 	render() {
 		return (
+
 			<Layout>
+
 				<div className={classes.Dashboard}>
 					<Sidebar
+
 						deskLists={this.state.deskLists}
 					/>
+
 					<div className={classes.content}>
+
 						{
 							this.state.taskLists.map((el, index) => {
 								return (
@@ -91,6 +144,9 @@ export class Dashboard extends Component{
 						}
 					</div>
 				</div>
+
+				<ModalWindow secondInputPlaceholder="Описание" secondInputChange={this.changeNewDeskDescription} secondInput={true} changeInput={this.changeNewDeskInput} newDesk={this.createNewDesk} closeClick={this.closeNewDesk} title="Создать стол" text="Введите название нового стола" placeholder="Название"/>
+
 			</Layout>
 		);
 	}

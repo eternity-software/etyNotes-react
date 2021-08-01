@@ -11,6 +11,7 @@
         font-weight: 500;
         font-size: 18px;
         color: $blackColor;
+        width: 100%;
 
         &:focus{
             border-color: $etyMainColor;
@@ -21,7 +22,7 @@
     }
 
     &.success > input{
-        border-color: #AFFFEC;
+        border-color: #585858;
     }
 
     &.error > input{

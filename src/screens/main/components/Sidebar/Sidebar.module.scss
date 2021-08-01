@@ -1,5 +1,9 @@
 @import "src/assets/main";
 
+.Sidebar::-webkit-scrollbar {
+    display: none;
+}
+
 .Sidebar{
     position: fixed;
     top: 63px;
@@ -9,6 +13,13 @@
     width: 100%;
     background-color: #FBFBFB;
     border-radius: 0px 45px 45px 0px;
+    overflow-y:scroll;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+
+    .rows .row {
+        display: inline-block;
+    }
 
     .logotype{
         max-height: 60px;
@@ -17,7 +28,7 @@
 
     .content{
         padding: 32px 60px 32px 60px;
-        display: flex;
+        display: block;
         flex-direction: column;
         grid-gap: 16px;
 
@@ -28,9 +39,11 @@
         }
 
         .list{
+            max-width: 100%;
             display: flex;
             flex-direction: column;
             grid-gap: 8px;
+            max-height: inherit;
 
             li{
                 min-height: 67px;
