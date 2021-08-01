@@ -55,6 +55,8 @@ export class Dashboard extends Component{
 	componentDidMount() {
 		document.title = "Панель управления";
 
+		try {
+			const token = localStorage.getItem("token");
 
 			API.get(`/account/getInfo?token=${token}`).then((result) => {
 				if(result.data.type === "success"){

@@ -47,6 +47,7 @@ export class Login extends Component{
 
 	onSubmit = async (fields) => {
 		try {
+
 			// Загружаем данные асинхронно из несуществующего места.
 			let result = await API.get(`/account/login?email=${fields.email}&password=${fields.password}`);
 			if(result.data.type === "success"){
@@ -55,6 +56,7 @@ export class Login extends Component{
 			} else {
 				alert(result.data.data[0].message);
 			}
+
 		} catch (e) {
 			console.log(`😱 Axios request failed: ${e}`);
 		}
