@@ -12,7 +12,7 @@ export const ModalWindow = props => {
     }
 
         return (
-            <div className="dm-overlay" id="win1">
+            <div className="dm-overlay" id={props.id}>
                 <div onClick="" className="dm-table">
                     <div className="dm-cell">
                         <div className="dm-modal">

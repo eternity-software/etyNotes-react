@@ -48,7 +48,7 @@ const Sidebar = props => {
 									</div>
 									<div className={classes.actions}>
 										<Image onClick={props.removeDesk.bind(this, el.deskId)} src="/img/delete-icon.svg" />
-										<Image src="/img/arrow-right.svg" style={{maxWidth: 25}} />
+										<Image onClick={props.clickDesk.bind(this, el.deskId)} src="/img/arrow-right.svg" style={{maxWidth: 25}} />
 									</div>
 								</li>
 							);

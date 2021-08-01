@@ -17,15 +17,18 @@ export class Dashboard extends Component{
 			token: "",
 			newDeskInput: "",
 			newDeskDesc: "",
+			newListInput: "",
+			newListDesc: "",
+			selectedDesk: 0,
 			account: {},
 			deskLists: [],
 			taskLists: [
 				{
 					id: 1,
-					title: "Соси мой член 2004",
+					name: "абхчба",
 					list: [
 						{
-							text: "Пососи мой бигбон",
+							text: "ауе блин",
 							username: "PIDOR",
 							self: true,
 							status: true
@@ -35,10 +38,10 @@ export class Dashboard extends Component{
 
 				{
 					id: 2,
-					title: "Соси мой член 2005",
+					name: "кто это написал",
 					list: [
 						{
-							text: "Пососи мой ролтон",
+							text: "оп оп суп",
 							username: "СУЧАРА",
 							self: false,
 							status: false
@@ -90,10 +93,12 @@ export class Dashboard extends Component{
 
 
 
-	updateDeskTasks = (token) => {
-		Axios.get(`/desk/get?token=${token}`).then((result) => {
+	updateDeskTasks = (deskId) => {
+		this.setState({selectedDesk: deskId});
+		let token = this.state.token;
+		Axios.get(`/desk/getTaskLists?token=${token}&deskId=${deskId}`).then((result) => {
 			if(result.data.type === "success"){
-				this.setState({deskLists: result.data.data.desks});
+				this.setState({taskLists: result.data.data.lists});
 			} else {
 				alert(result.data.data[0].message);
 			}
@@ -102,7 +107,7 @@ export class Dashboard extends Component{
 
 	removeDesk = (id) => {
 		let token = this.state.token;
-		API.get(`/desk/remove?token=${token}&id=${id}`).then((result) => {
+		Axios.get(`/desk/remove?token=${token}&id=${id}`).then((result) => {
 			if(result.data.type === "success"){
 				this.updateDesks(token);
 			} else {
@@ -152,6 +157,48 @@ export class Dashboard extends Component{
 		this.setState({newDeskDesc: e.target.value});
 	};
 
+	closeNewList = () => {
+		window.location.href = "#close";
+	};
+
+	createNewList = () => {
+		if(this.state.newListInput.length > 4 && this.state.newListDesc.length > 4) {
+			try {
+				const token = localStorage.getItem("token");
+				const name = this.state.newListInput;
+				const description = this.state.newListDesc;
+				const deskId = this.state.selectedDesk;
+
+				console.log(token);
+
+				Axios.get(`/list/create?token=${token}&name=${name}&description=${description}&deskId=${deskId}`).then((result) => {
+					if (result.data.type === "success") {
+						this.updateDesks(token);
+
+						window.location.href = "#close";
+					} else {
+						alert(result.data.data[0].message);
+					}
+				});
+			} catch (e) {
+				alert(e)
+				console.log(`😱 Axios request failed: ${e}`);
+			}
+		}
+		else
+		{
+			alert("Некорректные данные.")
+		}
+	};
+
+	changeNewListInput = (valid, shit, e) => {
+		this.setState({newListInput: e.target.value});
+	};
+
+	changeNewListDescription = (valid, shit,  e) => {
+		this.setState({newListDesc: e.target.value});
+	};
+
 	render() {
 		return (
 
@@ -162,16 +209,20 @@ export class Dashboard extends Component{
 						removeDesk={this.removeDesk}
 
 						token={this.state.token}
-
+						clickDesk={this.updateDeskTasks}
 						deskLists={this.state.deskLists}
 					/>
-
+					<div className={classes.rows}>
+						<h3>Название доски</h3>
+						<a href="#win2">Создать список</a>
+					</div>
 					<div className={classes.content}>
 
 						{
 							this.state.taskLists.map((el, index) => {
 								return (
 									<TaskList
+
 										key={index}
 										{...el}
 									/>
@@ -180,8 +231,8 @@ export class Dashboard extends Component{
 						}
 					</div>
 				</div>
-
-				<ModalWindow secondInputPlaceholder="Описание" secondInputChange={this.changeNewDeskDescription} secondInput={true} changeInput={this.changeNewDeskInput} newDesk={this.createNewDesk} closeClick={this.closeNewDesk} title="Создать стол" text="Введите название нового стола" placeholder="Название"/>
+				<ModalWindow id="win2" secondInputPlaceholder="Описание" secondInputChange={this.changeNewListDescription} secondInput={true} changeInput={this.changeNewListInput} newDesk={this.createNewList} closeClick={this.closeNewList} title="Создать список" text="Введите название нового списка" placeholder="Название"/>
+				<ModalWindow id="win1" secondInputPlaceholder="Описание" secondInputChange={this.changeNewDeskDescription} secondInput={true} changeInput={this.changeNewDeskInput} newDesk={this.createNewDesk} closeClick={this.closeNewDesk} title="Создать стол" text="Введите название нового стола" placeholder="Название"/>
 
 			</Layout>
 		);
