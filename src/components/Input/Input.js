@@ -19,7 +19,7 @@ export class Input extends Component{
 		const valid = this.validate(text);
 		// Выполняем функцию по изменению (если есть)
 		if(this.props.onChange)
-			this.props.onChange(valid, this.props.name);
+			this.props.onChange(valid, this.props.name, event);
 	}
 	// Проверяем на правильность
 	validate = text => {
