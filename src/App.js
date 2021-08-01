@@ -1,4 +1,11 @@
-import {Switch, Route} from "react-router-dom";
+import React, {Component, Fragment} from "react";
+
+import {
+	Switch,
+	Route,
+	Redirect
+} from "react-router-dom";
+
 import {
 	Home,
 	Login,
@@ -7,16 +14,30 @@ import {
 	Dashboard
 } from "./screens";
 
-const App = () => {
-	return (
-		<Switch>
-			<Route exact path="/" component={Home} />
-			<Route path="/login" component={Login} />
-			<Route path="/registration" component={Registration} />
-			<Route path="/activate" component={Activate} />
-			<Route path="/dashboard" component={Dashboard} />
-		</Switch>
-	);
+class App extends Component{
+	render() {
+		return (
+			<Switch>
+				{
+					!localStorage.getItem("token") ?
+					(
+						<Fragment>
+							<Route exact path="/" component={Home} />
+							<Route path="/login" component={Login} />
+							<Route path="/registration" component={Registration} />
+							<Route path="/activate" component={Activate} />
+						</Fragment>
+					)
+					:
+					(
+						<Fragment>
+							<Route path="/" component={Dashboard} />
+						</Fragment>
+					)
+				}
+			</Switch>
+		);
+	}
 }
 
 export default App;

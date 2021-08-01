@@ -44,31 +44,7 @@ export class Dashboard extends Component{
 	componentDidMount() {
 		document.title = "Панель управления";
 
-		try {
-			const token = localStorage.getItem("token");
 
-			API.get(`/account/getInfo?token=${token}`).then((result) => {
-				if(result.data.type === "success"){
-					if(result.data.data.account.activated === "Y"){
-						this.setState({account: result.data.data.account});
-
-						API.get(`/desk/getList?token=${token}`).then((result) => {
-							if(result.data.type === "success"){
-								this.setState({deskLists: result.data.data.desks});
-							} else {
-								alert(result.data.data[0].message);
-							}
-						});
-					} else {
-						this.props.history.push("/activate");
-					}
-				} else {
-					alert(result.data.data[0].message);
-				}
-			});
-		} catch (e) {
-			console.log(`😱 Axios request failed: ${e}`);
-		}
 	}
 
 	render() {
